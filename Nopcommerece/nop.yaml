@@ -6,7 +6,7 @@
     - name: installing and update the apache2 server
       apt:
         name: apache2
-        upadate_cache: yes
+        update_cache: yes
         state: present
     - name: wget the dpkg packages
       get_url: 
