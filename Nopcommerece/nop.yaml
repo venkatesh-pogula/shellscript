@@ -1,6 +1,6 @@
 ---
 - name: To install nop commerece application
-  hosts: appserver
+  hosts: all
   become: yes
   tasks:
     - name: installing and update the apache2 server
