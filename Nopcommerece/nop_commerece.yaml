@@ -6,11 +6,11 @@
     - name: To download the microsoft dpkg packages
       get_url:
         url: https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb
-        dest: /temp/packages-microsoft-prod.deb
+        dest: /home/devops//packages-microsoft-prod.deb
 
     - name: install the debian package
       apt:
-        deb: /tmp/packages-microsoft-prod.deb  
+        deb: /home/devops/packages-microsoft-prod.deb  
 
     - name: To install & update the .net application 
       apt:
