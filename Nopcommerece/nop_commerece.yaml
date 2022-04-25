@@ -13,13 +13,13 @@
 
     - name: To install & update the .net application 
       apt:
-        name: apt-transport-https aspnetcore-runtime-6.0
+        name: apt-transport-https 
         state: present 
 
-#    - name: To install .net application
-#      apt:
- #       name: aspnetcore-runtime-6.0
-  #      state: present    
+    - name: To install .net application
+      apt:
+        name: aspnetcore-runtime-6.0
+        state: present    
 
     - name: To run the a
       ansible.builtin.shell: dotnet --list-runtimes
