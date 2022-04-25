@@ -14,7 +14,6 @@
     - name: To install & update the .net application 
       apt:
         name: apt-transport-https
-        update_cache: yes
         state: yes 
 
     - name: To install .net application
