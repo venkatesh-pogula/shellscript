@@ -49,6 +49,7 @@
       file:
         src: ./default
         dest: /etc/nginx/sites-available/default 
+        state: link
 
     - name: To Create dirctroy /var/www/nopCommerce450
       ansible.builtin.file:
