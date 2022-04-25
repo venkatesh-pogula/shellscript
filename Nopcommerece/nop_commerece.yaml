@@ -29,8 +29,8 @@
         name: mysql-server
         state: present
 
-    - name: To run and set user and password for mysql we use the shell
-      ansible.builtin.shell: /usr/bin/mysql_secure_installation
+#    - name: To run and set user and password for mysql we use the shell
+#      ansible.builtin.shell: /usr/bin/mysql_secure_installation
 
     - name: To install the nginx
       apt:
