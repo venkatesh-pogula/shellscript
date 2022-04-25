@@ -47,7 +47,7 @@
 
     - name: To  edit the default /etc/nginx/sites-available/default 
       file:
-        src: default
+        src: ./default
         dest: /etc/nginx/sites-available/default 
 
     - name: To Create dirctroy /var/www/nopCommerce450
