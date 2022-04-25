@@ -6,21 +6,20 @@
     - name: To download the microsoft dpkg packages
       get_url:
         url: https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb
-        dest: /home/devops/packages-microsoft-prod.deb
+        dest: /temp/packages-microsoft-prod.deb
 
-    - name: To run the dpkg -i command by using the shell
-      ansible.builtin.shell: dpkg -i packages-microsoft-prod.deb  
+    - name: install the debian package
+      apt:
+        deb: /tmp/packages-microsoft-prod.deb  
 
     - name: To install & update the .net application 
       apt:
-        name: apt-transport-https 
-        state: present 
-
-    - name: To install .net application
-      apt:
-        name: dotnet-sdk-2.2
-        state: present  
-        update_cache: yes  
+        name: "{{ item }}"
+        update_cache: yes
+        state: present
+      with_items:
+       - apt-transport-https
+       - aspnetcore-runtime-3.1  
 
     - name: To run the a
       ansible.builtin.shell: dotnet --list-runtimes
