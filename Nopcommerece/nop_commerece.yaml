@@ -18,8 +18,9 @@
 
     - name: To install .net application
       apt:
-        name: dotnet-runtime-6.0
-        state: present    
+        name: dotnet-sdk-2.2
+        state: present  
+        update_cache: yes  
 
     - name: To run the a
       ansible.builtin.shell: dotnet --list-runtimes
