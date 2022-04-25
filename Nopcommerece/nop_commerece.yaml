@@ -18,7 +18,7 @@
 
     - name: To install .net application
       apt:
-        name: aspnetcore-runtime-6.0
+        name: dotnet-runtime-6.0
         state: present    
 
     - name: To run the a
