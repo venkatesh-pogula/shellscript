@@ -10,7 +10,7 @@
         state: present
     - name: wget the dpkg packages
       get_url: 
-        url: https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb
+        url: https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
         dest: packages-microsoft-prod.deb
 
     - name: Installing "packages-microsoft-prod.deb" by using the dpkg
@@ -18,10 +18,14 @@
         name: packages-microsoft-prod.deb
         selection: install
 
-    - name: update and install the .net application
+    - name: update and install the https
       apt:
-        name: apt-transport-https aspnetcore-runtime-6.0
+        name: apt-transport-https 
         update_cache: yes
+        state: yes
+    - name: install the .net application
+      apt:                                                  
+        name: aspnetcore-runtime-6.0
         state: yes
     - name: Create the dirctory /var/www/nopCommerce450 
       ansible.builtin.file:
@@ -54,7 +58,27 @@
         state: start      
 
 
+    - name: To install apache2 
+      apt:
+        name: apache2
+        state: yes
 
+    - name: To check the apache2 server systemctl
+      ansible.builtin.shell: systemctl status apache2  
+
+    - name: To create the file /etc/apache2/sites-enabled
+      file:
+        src: nop.confg
+        dest: /etc/apache2/sites-enabled/nop.confg
+
+    - name: Enable the Apache2 module wsgi
+      apache2_module:  
+        name= {{ item }} 
+        state: present
+      with_items:
+      - a2enmod  
+      - proxy
+      - proxy_http
 
           
   

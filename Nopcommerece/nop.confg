@@ -1,0 +1,6 @@
+<Virtualhost 80:*>
+      ServerName    nop.example.com
+      ProxyPreserveHost On
+      ProxyPass / http://localhost:5000/
+        ProxyPassReverse / http://localhost:5000/
+</Virtualhost>
