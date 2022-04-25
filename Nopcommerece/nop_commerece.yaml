@@ -14,12 +14,12 @@
     - name: To install & update the .net application 
       apt:
         name: apt-transport-https
-        state: yes 
+        state: present 
 
     - name: To install .net application
       apt:
         name:  aspnetcore-runtime-6.0
-        state: yes     
+        state: present    
 
     - name: To run the a
       ansible.builtin.shell: dotnet --list-runtimes
@@ -27,7 +27,7 @@
     - name: To install the mysql server
       apt:
         name: mysql-server
-        state: yes
+        state: present
 
     - name: To run and set user and password for mysql we use the shell
       ansible.builtin.shell: /usr/bin/mysql_secure_installation
@@ -35,7 +35,7 @@
     - name: To install the nginx
       apt:
         name: nginx
-        state: yes
+        state: present
 
     - name: Make sure a service unit is running
       ansible.builtin.systemd:
