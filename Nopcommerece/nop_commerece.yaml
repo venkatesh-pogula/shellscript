@@ -47,12 +47,22 @@
     - name: To know the status we use the shell
       ansible.builtin.shell: systemctl status nginx 
 
-    - name: To  edit the default /etc/nginx/sites-available/default 
-      file:
-        src: /home/devops/default
-        dest: /etc/nginx/sites-available/default 
-        mode: 0777
-        state: touch
+    - name: Replace the content of my file
+      copy:
+        src: /home/devops/ansible/default
+        dest: /etc/nginx/sites-available/default
+
+  #  - name: To  edit the default /etc/nginx/sites-available/default 
+  #    file:
+  #      src: /home/devops/default
+   #     dest: /etc/nginx/sites-available/default 
+   #     mode: 0777
+   #     state: touch
+
+    - name: start nginx
+      service:
+        name: nginx
+        state: restarted
 
     - name: To Create dirctroy /var/www/nopCommerce450
       file:
