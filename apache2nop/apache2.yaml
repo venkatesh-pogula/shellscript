@@ -27,8 +27,8 @@
     - name: To run the a
       ansible.builtin.shell: dotnet --list-runtimes
    
-    - name: To check the apache2 server systemctl
-      ansible.builtin.shell: systemctl status apache2
+   # - name: To check the apache2 server systemctl
+    #  ansible.builtin.shell: systemctl status apache2
 
 
     - name: To Create dirctroy /var/www/nopCommerce450
@@ -38,10 +38,17 @@
         group: www-data
         state: directory
 
-    - name: To get the nop commerece application from link and unzip will happen
-      ansible.builtin.unarchive:
-        src:  https://github.com/nopSolutions/nopCommerce/releases/download/release-4.50.2/nopCommerce_4.50.2_NoSource_linux_x64.zip
+
+    - name: To get the nop commerece application.
+      url:
+        url:  https://github.com/nopSolutions/nopCommerce/releases/download/release-4.50.2/nopCommerce_4.50.2_NoSource_linux_x64.zip
         dest: /var/www/nopCommerce450
+
+    - name: To unzip the nop commerce
+      unarchive:
+        src: /var/www/nopCommerce450
+        dest: /var/www/nopCommerce450
+        remote_src: yes   
 
     - name: make dircotry as bin
       file:
