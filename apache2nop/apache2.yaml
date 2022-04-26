@@ -62,7 +62,7 @@
         path: /var/www/logs 
         owner: www-data
         group: www-data 
-        state: directory 
+        state: directory
 
     - name: To run the .net application via shell command using &
       ansible.builtin.shell: /usr/bin/dotnet /var/www/nopCommerce450/Nop.Web.dll &
