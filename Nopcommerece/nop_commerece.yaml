@@ -12,22 +12,24 @@
       apt:
         deb: /home/devops/packages-microsoft-prod.deb  
 
-    - name: To install & update the .net application 
+    - name: To install & update the .net application and uzip
       apt:
         name: "{{ item }}"
         update_cache: yes
         state: present
       with_items:
        - apt-transport-https
-       - aspnetcore-runtime-3.1  
+       - aspnetcore-runtime-3.1 
+       - unzip 
+       - mysql-server
 
     - name: To run the a
       ansible.builtin.shell: dotnet --list-runtimes
 
-    - name: To install the mysql server
-      apt:
-        name: mysql-server
-        state: present
+#    - name: To install the mysql server
+#      apt:
+#       name: mysql-server
+#        state: present
 
 #    - name: To run and set user and password for mysql we use the shell
 #      ansible.builtin.shell: /usr/bin/mysql_secure_installation
@@ -47,20 +49,22 @@
 
     - name: To  edit the default /etc/nginx/sites-available/default 
       file:
-        src: ./default
+        src: /home/devops/default
         dest: /etc/nginx/sites-available/default 
         state: link
 
     - name: To Create dirctroy /var/www/nopCommerce450
       ansible.builtin.file:
         path: /var/www/nopCommerce450
+        owner: www-data
+        group: www-data
         state: directory
 
-    - name: To install the uzip
-      apt:
-        name: unzip
-        update_cache: yes
-        state: present
+ #   - name: To install the uzip
+ #     apt:
+ #       name: unzip
+ #       update_cache: yes
+ #       state: present
 
     - name: To get the nop commerece application from link and unzip will happen
       ansible.builtin.unarchive:
@@ -70,12 +74,12 @@
     - name: make dircotry as bin
       file:
         path: /var/www/bin
-        state: directory
+        state: directory 
 
     - name: make dircotry as logs
-      file: 
-        path: /var/www/logs
-        state: directory     
+      file:
+        path: /var/www/logs  
+        state: directory 
 
     - name: Create the /etc/systemd/system/nopCommerce450.service 
       file:
@@ -85,6 +89,6 @@
     - name: Nopcommerce450 service start and status
       ansible.builtin.systemd:
         name: nopCommerce450.service
-        state: start                 
+        state: started                
             
     
