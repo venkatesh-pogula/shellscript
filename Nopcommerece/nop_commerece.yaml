@@ -51,10 +51,11 @@
       file:
         src: /home/devops/default
         dest: /etc/nginx/sites-available/default 
-        state: link
+        mode: 0777
+        state: touch
 
     - name: To Create dirctroy /var/www/nopCommerce450
-      ansible.builtin.file:
+      file:
         path: /var/www/nopCommerce450
         owner: www-data
         group: www-data
