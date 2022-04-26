@@ -37,18 +37,22 @@
         owner: www-data
         group: www-data
         state: directory
+    #- name: To get the nop commerece application.
+     # ansible.builtin.get_url:
+      #  url:  https://github.com/nopSolutions/nopCommerce/releases/download/release-4.50.2/nopCommerce_4.50.2_NoSource_linux_x64.zip
+      #  dest: /var/www/nopCommerce450
 
-
-    - name: To get the nop commerece application.
-      url:
-        url:  https://github.com/nopSolutions/nopCommerce/releases/download/release-4.50.2/nopCommerce_4.50.2_NoSource_linux_x64.zip
+    - name: To get the nop
+      ansible.builtin.unarchive:
+        src: https://github.com/nopSolutions/nopCommerce/releases/download/release-4.50.2/nopCommerce_4.50.2_NoSource_linux_x64.zip
         dest: /var/www/nopCommerce450
+        remote_src: yes    
 
-    - name: To unzip the nop commerce
-      unarchive:
-        src: /var/www/nopCommerce450
-        dest: /var/www/nopCommerce450
-        remote_src: yes   
+ #   - name: To unzip the nop commerce
+  #    unarchive:
+   #     src: /var/www/nopCommerce450
+    #    dest: /var/www/nopCommerce450
+     #   remote_src: yes   
 
     - name: make dircotry as bin
       file:
@@ -66,6 +70,31 @@
 
     - name: To run the .net application via shell command using &
       ansible.builtin.shell: /usr/bin/dotnet /var/www/nopCommerce450/Nop.Web.dll &
+
+    - name: To enbale the reverse proxy
+      community.general.apache2_module:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - a2enmod proxy
+        - a2enmod proxy_http
+    - name: To create the file /etc/apache2/sites-available
+      ansible.builtin.template:
+        src: /nop.conf
+        dest: /etc/apache2/sites-available/nop.conf
+    - name: enable the a2ensite nop.conf
+      ansible.builtin.shell: a2ensite nop.cnf
+    - name: Make sure apache2
+      ansible.builtin.systemd:
+        state: restarted
+        name: apache2
+        daemon_reload: yes    
+
+
+  
+
+  
+        
         
 
    
