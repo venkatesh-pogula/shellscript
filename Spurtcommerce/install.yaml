@@ -1,0 +1,56 @@
+--- 
+ - name: To install the Spurt commerce
+   hosts: all 
+   become: yes
+   vars:
+
+   tasks:
+     - name: To get node source using curl command'
+       ansible.builtin.command: curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+     - name: To install the packages
+       apt:
+         name: "{{ item }}"
+         update_cache: yes
+         state: present 
+       with_item:
+         - nodejs
+         - build-essential  
+     - name: To install the npm packages
+       npm:
+         name: "{{ item }}"
+         state: latest
+         global: yes
+       with_item:
+         - forever
+         - apidoc
+         - angular/cli
+     - name: To install the apache2 ,mysql and imagemagick
+       apt: 
+         name: "{{ item }}"
+         state: present 
+         update_cache: yes
+       with_item:
+         - apache2
+         - mysql-server  
+         - imagemagick
+         
+     - name: enable the enmod and relative dependies
+       apache2_module:
+         state: present 
+         name: "{{ item }}"
+       with_item:
+         - a2enmod
+         - proxy
+         - proxy_http
+         - headers
+     - name: To restart the apache2 ( This will be changed to handlers)
+       systemd:
+         name: apache2
+         state: restarted  
+
+     - name: To create the user and set the password for mysql
+       mysql.mysql_user:
+         name: root 
+         password: 12345
+         priv: '*.*:ALL'
+         state: present                         
